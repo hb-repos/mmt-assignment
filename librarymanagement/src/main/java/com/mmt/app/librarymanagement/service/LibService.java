@@ -2,15 +2,11 @@ package com.mmt.app.librarymanagement.service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.TimeZone;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.datetime.DateFormatter;
 import org.springframework.stereotype.Service;
 
-import com.mmt.app.librarymanagement.Constants;
 import com.mmt.app.librarymanagement.entity.Book;
 import com.mmt.app.librarymanagement.entity.LibRegister;
 import com.mmt.app.librarymanagement.repository.LibRepository;
@@ -26,6 +22,9 @@ public class LibService {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private LocalDateTime localDateTime;
 	
 	public boolean reserveBook(Long userId, Long bookId) {
 		boolean validUser = userService.validateUser(userId);
@@ -77,8 +76,8 @@ public class LibService {
 					LibRegister entry = new LibRegister();
 					entry.setUserId(userId);
 					entry.setBookId(bookId);
-					entry.setIssueDate(getCurrentDate().toString());
-					entry.setExpectedReturnDate(getCurrentDate().plusDays(7).toString());
+					entry.setIssueDate(localDateTime.toString());
+					entry.setExpectedReturnDate(localDateTime.plusDays(7).toString());
 					libRepository.save(entry);
 					
 					return true;
@@ -86,11 +85,6 @@ public class LibService {
 			}
 		}
 		return false;
-	}
-
-	private LocalDateTime getCurrentDate() {
-		LocalDateTime localNow = LocalDateTime.now(TimeZone.getTimeZone("Asia/Calcutta").toZoneId());
-		return localNow;
 	}
 
 	public boolean returnBook(Long userId, Long bookId) {
@@ -105,11 +99,13 @@ public class LibService {
 					bookService.updateBook(book, bookId);
 					
 					// creating register entry
-//					LibRegister entry = new LibRegister();
-//					entry.setUserId(userId);
-//					entry.setBookId(bookId);
-//					libRepository.save(entry);
-					
+					LibRegister entry = libRepository.findByUserIdAndBookId(userId, bookId);
+					if (entry!=null) {
+						entry.setReturnDate(localDateTime.toString());
+						libRepository.save(entry);
+					} else {
+						return false;
+					}
 					return true;
 				} 
 			}
