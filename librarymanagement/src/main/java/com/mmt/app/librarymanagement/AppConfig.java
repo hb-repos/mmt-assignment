@@ -1,6 +1,6 @@
 package com.mmt.app.librarymanagement;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.TimeZone;
 
 import org.springframework.context.annotation.Bean;
@@ -12,7 +12,7 @@ public class AppConfig {
 
 	@Bean
 	@Scope("prototype")
-	public LocalDateTime getLocalDateTime() {
-		return LocalDateTime.now(TimeZone.getTimeZone("Asia/Calcutta").toZoneId());
+	public LocalDate getLocalDateTime() {
+		return LocalDate.now(TimeZone.getTimeZone("Asia/Calcutta").toZoneId());
 	}
 }

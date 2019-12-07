@@ -17,6 +17,7 @@ public class LibRegister {
 	private String issueDate;
 	private String expectedReturnDate;
 	private String returnDate;
+	private int fineAmount;
 
 	public LibRegister(Long id, Long userId, Long bookId, String issueDate) {
 		this.id = id;
@@ -68,13 +69,21 @@ public class LibRegister {
 	public void setReturnDate(String returnDate) {
 		this.returnDate = returnDate;
 	}
-	
+
 	public String getExpectedReturnDate() {
 		return expectedReturnDate;
 	}
 
 	public void setExpectedReturnDate(String expectedReturnDate) {
 		this.expectedReturnDate = expectedReturnDate;
+	}
+
+	public int getFineAmount() {
+		return fineAmount;
+	}
+
+	public void setFineAmount(int fineAmount) {
+		this.fineAmount = fineAmount;
 	}
 
 	@Override

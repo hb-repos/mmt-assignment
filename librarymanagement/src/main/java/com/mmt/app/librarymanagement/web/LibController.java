@@ -24,12 +24,22 @@ public class LibController {
 	@Autowired
 	private LibService libService;
 	
+	/**
+	 * 
+	 * @return list of all register entries
+	 */
 	@GetMapping
 	public List<LibRegister> getRegister(){
 		LOGGER.info("LibController.getRegister");
 		return libService.getRegister();
 	}
 	
+	/**
+	 * 
+	 * @param userId
+	 * @param bookId
+	 * @return msg::String
+	 */
 	@GetMapping("/reserve/{userId}/{bookId}")
 	public String reserveBook(@PathVariable Long userId, @PathVariable Long bookId) {
 		LOGGER.info("LibController.reserveBook");
@@ -40,6 +50,12 @@ public class LibController {
 			return Constants.ERROR_RESERVING_BOOK;
 	}
 	
+	/**
+	 * 
+	 * @param userId
+	 * @param bookId
+	 * @return msg::String
+	 */
 	@GetMapping("/unreserve/{userId}/{bookId}")
 	public String releaseBook(@PathVariable Long userId, @PathVariable Long bookId) {
 		LOGGER.info("LibController.releaseBook");
@@ -50,6 +66,12 @@ public class LibController {
 			return Constants.ERROR_RELEASING_BOOK;
 	}
 	
+	/**
+	 * 
+	 * @param userId
+	 * @param bookId
+	 * @return msg::String
+	 */
 	@GetMapping("/issue/{userId}/{bookId}")
 	public String issueBook(@PathVariable Long userId, @PathVariable Long bookId) {
 		LOGGER.info("LibController.issueBook");
@@ -60,6 +82,12 @@ public class LibController {
 			return Constants.ERROR_ISSUING_BOOK;
 	}
 	
+	/**
+	 * 
+	 * @param userId
+	 * @param bookId
+	 * @return msg::String
+	 */
 	@GetMapping("/return/{userId}/{bookId}")
 	public String returnBook(@PathVariable Long userId, @PathVariable Long bookId) {
 		LOGGER.info("LibController.returnBook");
@@ -70,6 +98,11 @@ public class LibController {
 			return Constants.ERROR_RETURNING_BOOK;
 	}
 	
+	/**
+	 * 
+	 * @param bookId
+	 * @return msg::String
+	 */
 	@GetMapping("/available/{bookId}")
 	public String isAvailableBook(@PathVariable Long bookId) {
 		LOGGER.info("LibController.isAvailableBook");
